@@ -133,6 +133,9 @@ class Track:
         if isinstance(tracks, Playlist):
             tracks = tracks.tracks
 
+        if self.source == "spotify" and tracks:
+            tracks = tracks[1:]
+
         return tracks
 
     @property
