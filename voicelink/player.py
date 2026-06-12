@@ -890,7 +890,7 @@ class Player(VoiceProtocol):
 
         tracks = await track.get_recommendations(self._node)
         if tracks:
-            await self.add_track(tracks[:1], duplicate=False)
+            await self.add_track(tracks[:1], duplicate=True)
             
             self._logger.debug(f"Player in {self.guild.name}({self.guild.id}) has been requested recommendations.")
             return True
