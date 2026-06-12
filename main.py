@@ -142,7 +142,7 @@ class Vocard(commands.Bot):
         func.logger.info(f"Logging As {self.user}")
         func.logger.info(f"Bot ID: {self.user.id}")
         func.logger.info("------------------")
-        func.logger.info(f"Vocard Version: {update.__version__}")
+        func.logger.info(f"Bot Version: {update.__version__}")
         func.logger.info(f"Discord Version: {discord.__version__}")
         func.logger.info(f"Python Version: {sys.version}")
         func.logger.info("------------------")
@@ -170,11 +170,10 @@ class Vocard(commands.Bot):
             description += f"**Description:**\n{ctx.command.help}\n\u200b"
 
             embed = discord.Embed(description=description, color=bot_config.embed_color)
-            embed.set_footer(icon_url=ctx.me.display_avatar.url, text=f"More Help: {bot_config.invite_link}")
             return await ctx.reply(embed=embed)
 
         elif not issubclass(error.__class__, VoicelinkException):
-            error = await Lang_handler.get_lang(ctx.guild.id, "common.errors.unknown") + bot_config.invite_link
+            error = await Lang_handler.get_lang(ctx.guild.id, "common.errors.unknown")
             func.logger.error(f"An unexpected error occurred in the {ctx.command.name} command on the {ctx.guild.name}({ctx.guild.id}).", exc_info=exception)
 
         try:

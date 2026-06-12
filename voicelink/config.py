@@ -81,7 +81,6 @@ class Config:
         self.mongodb_url: str = settings.get("mongodb_url") or os.getenv("MONGODB_URL")
         self.mongodb_name: str = settings.get("mongodb_name") or os.getenv("MONGODB_NAME")
         
-        self.invite_link: str = "https://discord.gg/wRCgB7vBQv"
         self.nodes: Dict[str, Dict[str, Union[str, int, bool]]] = settings.get("nodes", {})
         self.max_queue: int = settings.get("default_max_queue", 1000)
         self.search_platform: SearchType = SearchType.from_platform(settings.get("default_search_platform", "youtube")) or SearchType.YOUTUBE

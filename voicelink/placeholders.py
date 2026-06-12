@@ -70,7 +70,7 @@ class PlayerPlaceholder:
             "loop_mode": self.loop_mode,
             "default_embed_color": self.default_embed_color,
             "bot_icon": self.bot_icon,
-            "server_invite_link": Config().invite_link,
+            "server_invite_link": "",
             "invite_link": f"https://discord.com/oauth2/authorize?client_id={self.bot.user.id}&permissions=2184260928&scope=bot%20applications.commands"
         }
 
