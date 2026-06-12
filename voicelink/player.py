@@ -890,10 +890,16 @@ class Player(VoiceProtocol):
 
         tracks = await track.get_recommendations(self._node)
         if tracks:
-            await self.add_track(tracks[:1], duplicate=False)
-            
-            self._logger.debug(f"Player in {self.guild.name}({self.guild.id}) has been requested recommendations.")
-            return True
+            # Filter out tracks that are already in the queue to avoid duplicates
+            queue_uris = {t.uri for t in self.queue._queue}
+            unique_tracks = [t for t in tracks if t.uri not in queue_uris]
+            if unique_tracks:
+                try:
+                    await self.add_track(unique_tracks[:1], duplicate=False)
+                    self._logger.debug(f"Player in {self.guild.name}({self.guild.id}) has been requested recommendations.")
+                    return True
+                except DuplicateTrack:
+                    pass
         return False
     
     async def update_voice_status(self, remove_status: bool = False) -> None:
