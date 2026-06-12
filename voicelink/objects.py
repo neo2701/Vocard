@@ -111,11 +111,21 @@ class Track:
         if not node or not node._available:
             return []
 
-        rec_type = TrackRecType.from_platform(self.source)
-        if not rec_type:
-            return []
-        
-        query = rec_type.format(track_id=self.identifier)
+        if self.source == "spotify":
+            search_query = f"ytsearch:{self.title} {self.author}"
+            yt_results = await node.get_tracks(query=search_query, requester=node.bot.user)
+            if not yt_results:
+                return []
+            
+            mirror_track = yt_results.tracks[0] if isinstance(yt_results, Playlist) else yt_results[0]
+            query = TrackRecType.YOUTUBE.format(track_id=mirror_track.identifier)
+        else:
+            rec_type = TrackRecType.from_platform(self.source)
+            if not rec_type:
+                return []
+            
+            query = rec_type.format(track_id=self.identifier)
+            
         tracks = await node.get_tracks(query=query, requester=node.bot.user)
         if not tracks:
             return []
